@@ -1,5 +1,7 @@
 ;(function($) {
 
+	var currentQuestion = 0;
+	var players = {}; //object containers for players and their scores
 	var json = [
 		{
 			question : 'Ma question un',
@@ -38,5 +40,22 @@
 
 		$('#input')
 	});
+
+	var checkValidity = function(questionIndex, rep)
+	{
+		if(json[questionIndex][rep] == json[questionIndex].valid)
+			return true;
+		else
+			return false;
+	};// method to check if the player has the correct solution
+
+	var nextQuestion = function(player, score)
+	{
+		players[player].score += score;
+		if(currentQuestion < json.length)
+			currentQuestion++;
+		else
+			finishGame();
+	}// method called when a correct solution has been found to go to the next question
 
 })(jQuery);
