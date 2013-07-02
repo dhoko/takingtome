@@ -7,7 +7,7 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'rep1'
+			valid : 'robert'
 		},
 		{
 			question : 'Ma question 2',
@@ -15,7 +15,7 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'rep4'
+			valid : 'luis'
 		}
 	];
  
@@ -28,7 +28,7 @@
 		input : function(label,name) {
 			var id = btoa(Math.floor(Math.random() * 1000));
 			var _str = '<label for="' + id + '">' + label + '</label>';
-			_str += '<input type="radio" name="' + name + '" id="' + id + '" />';
+			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
 
 			return _str;
 		},
@@ -53,7 +53,7 @@
 				}
 
 				if('valid' === dom) {
-					str += Form.solution(config[dom]);
+					str += Form.solution(config[dom],name);
 				}
 			}
 
@@ -69,5 +69,7 @@
 
 		formDiv.append(Form.generate(ele));
 	});
+
+	// $('.formElement:not(.formElement:first-child)').addClass('hidden')
 
 })(jQuery);
