@@ -1,5 +1,7 @@
 ;(function($) {
 
+	var currentQuestion = 0;
+	var players = {}; //object containers for players and their scores
 	var json = [
 		{
 			question : 'Ma question un',
@@ -8,7 +10,7 @@
 			rep3 : 'henrie',
 			rep4 : 'robert',
 			valid : 'robert',
-			score : 5
+			score : 5 
 		},
 		{
 			question : 'Ma question 2',
@@ -98,5 +100,33 @@
 
 	}(formMain, display);
 
+	var addEventsRadio = function()
+	{
+		$("input[type='radio']").click(function(event)
+			{
+				var value = this.value;
+				var rep = $.trim(document.getElementById('rep'+this.name).value);
+
+				if(value == rep)
+					nextQuestion(playerMe, hiddenField);
+				else
+					falseRep();
+			})
+	}();
+	var checkValidity = function(rep)
+	{
+		return (json[currentQuestion][rep] == json[questionIndex].valid);
+	};// method to check if the player has the correct solution
+
+	// $('.formElement:not(.formElement:first-child)').addClass('hidden')
 
 })(jQuery);
+
+var nextQuestion = function(player, score)
+	{
+		players[player].score += score;
+		if(currentQuestion < json.length)
+			currentQuestion++;
+		else
+			finishGame();
+	}// method called when a correct solution has been found to go to the next question
