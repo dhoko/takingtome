@@ -6,6 +6,7 @@ body {background: url('grey_wash_wall.png')}
 
 .main {
 	width: 80%;
+	max-width: 780px;
 	margin: 15px auto;
 	border: 1px solid #efefef;
 	background: #F5F5F5;
