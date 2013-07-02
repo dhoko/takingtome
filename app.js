@@ -7,7 +7,8 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'robert'
+			valid : 'robert',
+			score : 5
 		},
 		{
 			question : 'Ma question 2',
@@ -15,7 +16,8 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'luis'
+			valid : 'luis',
+			score : 10
 		}
 	];
  
@@ -73,14 +75,13 @@
 
 	}
 
-	var formMain = $('#contest');
+	var formMain = $('#contest'),
+		score = document.getElementById('score');
 
 	// OnLoad display only the first form
 	var display = function(div) {
-
 		div.find('.formElement:not(.formElement:first-child)').addClass('hidden');
-
-	}
+	};
 
 	// From the config to the dom, render the form
 	var builder = function(formDiv,callback) {
@@ -88,7 +89,7 @@
 		json.forEach(function(ele,index) {
 			formDiv.append(Form.generate(ele));
 		});
-
+		score.value = 0;
 		callback(formDiv);
 
 	}(formMain, display);
