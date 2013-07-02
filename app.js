@@ -9,7 +9,8 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'rep1'
+			valid : 'robert',
+			score : 5 
 		},
 		{
 			question : 'Ma question 2',
@@ -17,7 +18,7 @@
 			rep2 : 'marcel',
 			rep3 : 'henrie',
 			rep4 : 'robert',
-			valid : 'rep4'
+			valid : 'luis'
 		}
 	];
  
@@ -30,7 +31,7 @@
 		input : function(label,name) {
 			var id = btoa(Math.floor(Math.random() * 1000));
 			var _str = '<label for="' + id + '">' + label + '</label>';
-			_str += '<input type="radio" name="' + name + '" id="' + id + '" />';
+			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
 
 			return _str;
 		},
@@ -55,7 +56,7 @@
 				}
 
 				if('valid' === dom) {
-					str += Form.solution(config[dom]);
+					str += Form.solution(config[dom],name);
 				}
 			}
 
@@ -69,9 +70,6 @@
 
 	json.forEach(function(ele,index) {
 
-		
-		console.log(ele.valid);
-		
 		formDiv.append(Form.generate(ele));
 	});
 
@@ -79,7 +77,13 @@
 	{
 		$("input[type='radio']").click(function(event)
 			{
-				
+				var value = this.value;
+				var rep = $.trim(document.getElementById('rep'+this.name).value);
+
+				if(value == rep)
+					nextQuestion(playerMe, hiddenField);
+				else
+					falseRep();
 			})
 	}();
 	var checkValidity = function(rep)
@@ -87,7 +91,11 @@
 		return (json[currentQuestion][rep] == json[questionIndex].valid);
 	};// method to check if the player has the correct solution
 
-	var nextQuestion = function(player, score)
+	// $('.formElement:not(.formElement:first-child)').addClass('hidden')
+
+})(jQuery);
+
+var nextQuestion = function(player, score)
 	{
 		players[player].score += score;
 		if(currentQuestion < json.length)
@@ -95,5 +103,3 @@
 		else
 			finishGame();
 	}// method called when a correct solution has been found to go to the next question
-
-})(jQuery);
