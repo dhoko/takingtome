@@ -23,7 +23,7 @@
 
 		title : function(label) {
 			return '<h2>' + label + '</h2>';
-		}
+		},
 
 		input : function(label,name) {
 			var id = btoa(Math.floor(Math.random() * 1000));
@@ -33,10 +33,14 @@
 			return _str;
 		},
 
+		solution : function(label,name) {
+			return '<input type="hidden" value="' + label + '" id="rep' + name + '">'
+		},
+
 		generate : function(config) {
 
 			var name = btoa(Math.floor(Math.random() * 1000) + 'rep');
-			var str = '<div id="' + name + '">';
+			var str = '<div id="' + name + '" class="formElement">';
 
 
 			for(dom in config) {
@@ -47,7 +51,14 @@
 				if('question' !== dom && 'valid' !== dom) {
 					str += Form.input(config[dom],name);
 				}
+
+				if('valid' === dom) {
+					str += Form.solution(config[dom]);
+				}
 			}
+
+			str += '</div>';
+			return str;
 		}
 
 	}
@@ -58,8 +69,8 @@
 
 		
 		console.log(ele.valid);
-		Form.generate(ele);
-		formDiv.html();
+		
+		formDiv.append(Form.generate(ele));
 	});
 
 })(jQuery);
