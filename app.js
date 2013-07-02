@@ -21,7 +21,11 @@
 		}
 	];
  
-	var form = {
+	var Form = {
+
+		title : function(label) {
+			return '<h2>' + label + '</h2>';
+		},
 
 		input : function(label,name) {
 			var id = btoa(Math.floor(Math.random() * 1000));
@@ -29,16 +33,46 @@
 			_str += '<input type="radio" name="' + name + '" id="' + id + '" />';
 
 			return _str;
+		},
+
+		solution : function(label,name) {
+			return '<input type="hidden" value="' + label + '" id="rep' + name + '">'
+		},
+
+		generate : function(config) {
+
+			var name = btoa(Math.floor(Math.random() * 1000) + 'rep');
+			var str = '<div id="' + name + '" class="formElement">';
+
+
+			for(dom in config) {
+				if('question' === dom) {
+					str += Form.title(config[dom]);
+				}
+
+				if('question' !== dom && 'valid' !== dom) {
+					str += Form.input(config[dom],name);
+				}
+
+				if('valid' === dom) {
+					str += Form.solution(config[dom]);
+				}
+			}
+
+			str += '</div>';
+			return str;
 		}
 
 	}
 
-	json.forEach(function(form,index) {
+	var formDiv = $('#contest');
 
-		var name = btoa(Math.floor(Math.random() * 1000) + 'rep');
-		console.log(form.valid);
+	json.forEach(function(ele,index) {
 
-		$('#input')
+		
+		console.log(ele.valid);
+		
+		formDiv.append(Form.generate(ele));
 	});
 
 	var checkValidity = function(questionIndex, rep)
