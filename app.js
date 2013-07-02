@@ -75,12 +75,16 @@
 		formDiv.append(Form.generate(ele));
 	});
 
-	var checkValidity = function(questionIndex, rep)
+	var addEventsRadio = function()
 	{
-		if(json[questionIndex][rep] == json[questionIndex].valid)
-			return true;
-		else
-			return false;
+		$("input[type='radio']").click(function(event)
+			{
+				
+			})
+	}();
+	var checkValidity = function(rep)
+	{
+		return (json[currentQuestion][rep] == json[questionIndex].valid);
 	};// method to check if the player has the correct solution
 
 	var nextQuestion = function(player, score)
