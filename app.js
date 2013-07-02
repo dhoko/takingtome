@@ -44,6 +44,7 @@
 			return '<input type="hidden" value="' + label + '" id="rep' + name + '">'
 		},
 
+
 		// Main loop on each question in the JSON
 		generate : function(config) {
 
