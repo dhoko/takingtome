@@ -41,7 +41,7 @@ window.playerMe =
 
 		// Build radio input for a question
 		input : function(label,name) {
-			var id = btoa(Math.floor(Math.random() * 1000));
+			var id = 's' + (Math.floor(Math.random() * 1000)).toString(16);
 
 			var _str = '<div class="row-form">';
 			_str += '<label for="' + id + '">' + label + '</label>';
@@ -60,7 +60,7 @@ window.playerMe =
 		generate : function(config) {
 
 			// Generate an id attach to the current step
-			var name = btoa(Math.floor(Math.random() * 1000) + 'rep');
+			var name = 'form' + (Math.floor(Math.random() * 1000)).toString(16);
 			var str = '<div id="' + name + '" class="formElement">';
 
 			// For each key build a custom element
