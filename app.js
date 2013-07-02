@@ -56,6 +56,9 @@
 
 			// For each key build a custom element
 			for(dom in config) {
+
+				if('score' === dom) continue;
+
 				if('question' === dom) {
 					str += Form.title(config[dom]);
 				}
@@ -75,8 +78,9 @@
 
 	}
 
-	var formMain = $('#contest'),
-		score = document.getElementById('score');
+	var formMain  	  = $('#contest'),
+		questionScore = $(document.getElementById('questionScore')),
+		ownScore      = $(document.getElementById('ownScore'));
 
 	// OnLoad display only the first form
 	var display = function(div) {
@@ -89,7 +93,7 @@
 		json.forEach(function(ele,index) {
 			formDiv.append(Form.generate(ele));
 		});
-		score.value = 0;
+		questionScore.html(json[0].score);
 		callback(formDiv);
 
 	}(formMain, display);
