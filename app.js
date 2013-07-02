@@ -37,9 +37,11 @@
 		// Build radio input for a question
 		input : function(label,name) {
 			var id = btoa(Math.floor(Math.random() * 1000));
-			var _str = '<label for="' + id + '">' + label + '</label>';
-			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
 
+			var _str = '<div class="row-form">';
+			_str += '<label for="' + id + '">' + label + '</label>';
+			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
+			_str += '</div>';
 			return _str;
 		},
 
@@ -119,7 +121,7 @@
 	};// method to check if the player has the correct solution
 
 	// $('.formElement:not(.formElement:first-child)').addClass('hidden')
-
+	window.toto ='coucou tu veux voir ?';
 })(jQuery);
 
 var nextQuestion = function(player, score)

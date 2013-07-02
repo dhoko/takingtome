@@ -1,3 +1,35 @@
+body {background: url('grey_wash_wall.png')}
+
 .hidden {
 	display: none
 }
+
+.main {
+	width: 80%;
+	margin: 15px auto;
+	border: 1px solid #efefef;
+	background: #F5F5F5;
+	box-shadow: 0 4px 4px rgba(0,0,0,.44);
+	padding: 10px 20px;
+}
+
+.row-form {
+	display: inline-block;
+	width: 50%;
+	position: relative;
+	height: 70px;
+	margin-top: 25px
+}
+
+label {
+	text-align: center;
+	display: block;
+}
+
+input[type="radio"] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
