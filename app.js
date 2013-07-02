@@ -1,5 +1,10 @@
 ;(function($) {
 
+window.playerMe = 
+{
+	name : "toto",
+	score : 0
+}
 	var currentQuestion = 0;
 	var players = {}; //object containers for players and their scores
 	var json = [
@@ -97,7 +102,8 @@
 		json.forEach(function(ele,index) {
 			formDiv.append(Form.generate(ele));
 		});
-		questionScore.html(json[0].score);
+		questionScore.html(json[currentQuestion].score);
+		ownScore.html(playerMe.score);
 		callback(formDiv);
 
 	}(formMain, display);
@@ -106,13 +112,13 @@
 	{
 		$("input[type='radio']").click(function(event)
 			{
+				var name = this.name;
 				var value = this.value;
 				var rep = $.trim(document.getElementById('rep'+this.name).value);
-
 				if(value == rep)
-					nextQuestion(playerMe, hiddenField);
+					nextQuestion(playerMe.name, questionScore.html(), name);
 				else
-					falseRep();
+					falseRep(playerMe.name);
 			})
 	}();
 	var checkValidity = function(rep)
@@ -120,15 +126,34 @@
 		return (json[currentQuestion][rep] == json[questionIndex].valid);
 	};// method to check if the player has the correct solution
 
-	// $('.formElement:not(.formElement:first-child)').addClass('hidden')
-	window.toto ='coucou tu veux voir ?';
-})(jQuery);
 
-var nextQuestion = function(player, score)
+	var loadPlayers = function()
 	{
-		players[player].score += score;
+		players[playerMe.name] = playerMe;
+	}
+	window.nextQuestion = function(player, score, name)
+	{
+		players[player].score += ~~score;
 		if(currentQuestion < json.length)
+		{
 			currentQuestion++;
+			var currentDiv = $("#"+name);
+			currentDiv.hide();
+			currentDiv.next().show();
+			changeScore();
+		}
 		else
 			finishGame();
 	}// method called when a correct solution has been found to go to the next question
+	window.falseRep = function(player)
+	{
+		players[player].score--;
+		changeScore();
+	}// method called when a correct solution has been found to go to the next question
+	window.changeScore = function()
+	{
+		ownScore.html(playerMe.score);
+	}
+
+loadPlayers();
+})(jQuery);
