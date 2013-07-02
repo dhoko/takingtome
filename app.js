@@ -67,9 +67,6 @@
 
 	json.forEach(function(ele,index) {
 
-		
-		console.log(ele.valid);
-		
 		formDiv.append(Form.generate(ele));
 	});
 
