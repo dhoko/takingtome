@@ -142,10 +142,16 @@ window.playerMe =
 		if(currentQuestion < json.length)
 		{
 			currentQuestion++;
-			var currentDiv = $("#"+name);
-			currentDiv.hide();
-			currentDiv.next().show();
+			if(name !== undefined)
+				var currentDiv = $("#"+name);
+			else
+			{
+				window.currentDiv.hide();
+				window.currentDiv = window.currentDiv.next().show();
+			}
 			changeScore();
+			timer = json[currentQuestion].time;
+			console.log(timer);
 		}
 		else
 			finishGame();
@@ -155,6 +161,7 @@ window.playerMe =
 		players[player].score--;
 		changeScore();
 	}// method called when a correct solution has been found to go to the next question
+	window.currentDiv = $("div").first();
 	window.changeScore = function()
 	{
 		questionScore.html(json[currentQuestion].score)
