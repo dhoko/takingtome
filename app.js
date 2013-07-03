@@ -189,11 +189,11 @@ window.device = 2;
 	}
 	window.canvas = document.getElementById('canvas');
 	window.videoCanvas = document.getElementById('video');
-	canvas.width = 500;
-	canvas.height = 30;
-	videoCanvas.width = 300;
-	videoCanvas.height = 300;
-	window.context = canvas.getContext('2d');
+	//window.canvas.width = 500;
+	//window.canvas.height = 30;
+	//videoCanvas.width = 300;
+	//videoCanvas.height = 300;
+	//window.context = canvas.getContext('2d');
 	window.draw = function()
 	{
 		context.fillStyle = "white";
