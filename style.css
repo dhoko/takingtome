@@ -133,3 +133,15 @@ input[type="radio"] {
 	right: 0;
 	margin-right: -213px;
 }
+
+.alert {
+	background: rgb(250, 44, 44);
+	padding: 5px 10px;
+	border: 1px solid red;
+	color: white
+}
+
+.alert.success {
+	background: rgb(91, 190, 25);
+	border: 1px solid rgb(7, 165, 20)
+}
