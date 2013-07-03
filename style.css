@@ -129,8 +129,8 @@ input[type="radio"] {
 #canvas{
 	-webkit-transform: rotate(-90deg);
 	position: absolute;
-	top: 85px;
-	right: 0;
+	top: 137px;
+	right: 19%;
 	margin-right: -213px;
 }
 
@@ -147,6 +147,6 @@ input[type="radio"] {
 }
 
 #video{
-	margin-left: 31%;
+	margin-left: 16%;
 	margin-bottom: 3%;
 }
