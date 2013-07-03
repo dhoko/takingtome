@@ -227,9 +227,6 @@ window.playerMe =
 	{
 		nextQuestion();
 	}
-// init();
-// getScore(score);
-// setScore(score)
 	window.setPicture = function(b64image)
 	{
 		window.video.src = b64image;
