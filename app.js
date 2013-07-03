@@ -9,22 +9,22 @@ window.playerMe =
 	var players = {}; //object containers for players and their scores
 	window.json = [
 		{
-			question : 'Ma question un',
-			rep1 : 'luis',
-			rep2 : 'marcel',
-			rep3 : 'henrie',
-			rep4 : 'robert',
-			valid : 'robert',
+			question : 'Ou sommes nous ?',
+			rep1 : 'un chateau',
+			rep2 : 'un domaine',
+			rep3 : 'une grande maison',
+			rep4 : 'un palais',
+			valid : 'un chateau',
 			score : 5, 
 			time : 60
 		},
 		{
-			question : 'Ma question 2',
-			rep1 : 'luis',
-			rep2 : 'marcel',
-			rep3 : 'henrie',
-			rep4 : 'robert',
-			valid : 'luis',
+			question : 'Qui a gagn&#233; la coupe des conf&#233;d&#233;rations ?',
+			rep1 : 'Italie',
+			rep2 : 'Uruguay',
+			rep3 : 'Espagne',
+			rep4 : 'Br&#233;sil',
+			valid : 'Br&#233;sil',
 			score : 10, 
 			time : 60
 		}
@@ -47,8 +47,8 @@ window.playerMe =
 			var id = 's' + (Math.floor(Math.random() * 1000)).toString(16);
 
 			var _str = '<div class="row-form">';
-			_str += '<label for="' + id + '">' + label + '</label>';
 			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
+			_str += '<label for="' + id + '">' + label + '</label>';
 			_str += '</div>';
 			return _str;
 		},
