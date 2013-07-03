@@ -188,8 +188,11 @@ window.device = 2;
 		ownScore.html(playerMe.score);
 	}
 	window.canvas = document.getElementById('canvas');
+	window.videoCanvas = document.getElementById('video');
 	canvas.width = 500;
 	canvas.height = 30;
+	videoCanvas.width = 300;
+	videoCanvas.height = 300;
 	window.context = canvas.getContext('2d');
 	window.draw = function()
 	{
@@ -198,6 +201,8 @@ window.device = 2;
 
 		context.fillStyle = "rgb("+(120-(Math.round(timer)*2))+","+Math.round(timer)*2+", 0)";
 		context.fillRect(0,0,(json[currentQuestion].time/json[currentQuestion].time*timer)*4, 30);
+
+		//videoContext.drawImage(window.video, 0, 0);
 	}
 	window.decreaseTimer = function()
 	{
@@ -213,6 +218,8 @@ window.device = 2;
 		setInterval(decreaseTimer, 20);
 		builder(formMain, display);
 		addEventsRadio();
+
+		window.video = new Image();
 	}
 	window.getScore = function(score)
 	{
@@ -226,11 +233,11 @@ window.device = 2;
 	{
 		nextQuestion();
 	}
-// init();
-// getScore(score);
-// setScore(score)
-// setPicture();
-// questionValidate(currentQuestion);
+	window.setPicture = function(b64image)
+	{
+		window.video.src = b64image;
+		context.drawImage(window.video, 0, 0);
+	}
 
 })(jQuery);
 var simpleCallApp = function(action) 
@@ -264,11 +271,7 @@ var callApp= function(cfg) {
 		var url = self._getProcheoUrl(config);
 	
 		self.callAppiPadDevice(config,url);
-	}
-	default:	// retrocompatibility behaviour
-		break;	 
-		
-	}
+	}	
 };
 			
 var callAppiPadDevice= function (config,url) {
