@@ -63,11 +63,15 @@ input[type="radio"] {
 
 /* Aspect des checkboxes */  
 /* :before sert à créer la case à cocher */  
-[type="checkbox"]:not(:checked) + label:before,  
-[type="checkbox"]:checked + label:before {  
+[type="radio"]:not(:checked) + label:before,  
+[type="radio"]:checked + label:before {  
   content: '';  
-  position: absolute;  
-  left:0; top: 2px;  
+  position: absolute; 
+  top: 0; 
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;  
   width: 17px; height: 17px; /* dim. de la case */  
   border: 1px solid #aaa;  
   background: #f8f8f8;  
@@ -80,10 +84,14 @@ input[type="radio"] {
 [type="radio"]:checked + label:after {  
   content: '✔';  
   position: absolute;  
-  top: 0; left: 4px;  
-  font-size: 14px;  
-  color: #09ad7e;  
-  transition: all .2s; /* on prévoit une animation */  
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;  
+  font-size: 19px;
+  color: #09ad7e;
+  transition: all .2s;
+  top: 25px; 
 }  
 /* Aspect si "pas cochée" */  
 [type="radio"]:not(:checked) + label:after {  
@@ -94,6 +102,28 @@ input[type="radio"] {
 [type="radio"]:checked + label:after {  
   opacity: 1; /* coche opaque */  
   transform: scale(1); /* mise à l'échelle 1:1 */  
+}  
+
+/* aspect désactivée */  
+[type="radio"]:disabled:not(:checked) + label:before,  
+[type="radio"]:disabled:checked + label:before {  
+  box-shadow: none;  
+  border-color: #bbb;  
+  background-color: #ddd;  
+}  
+/* styles de la coche (si cochée/désactivée) */  
+[type="radio"]:disabled:checked + label:after {  
+  color: #999;  
+}  
+/* on style aussi le label quand désactivé */  
+[type="radio"]:disabled + label {  
+  color: #aaa;  
+}  
+   
+/* aspect au focus de l'élément */  
+[type="radio"]:checked:focus + label:before,  
+[type="radio"]:not(:checked):focus + label:before {  
+  border: 1px dotted blue;  
 }  
 
 #canvas{
