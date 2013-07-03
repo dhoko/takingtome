@@ -83,7 +83,6 @@ window.playerMe =
 					str += Form.solution(config[dom],name);
 				}
 			}
-
 			str += '</div>';
 			return str;
 		}
@@ -96,6 +95,7 @@ window.playerMe =
 
 	// OnLoad display only the first form
 	var display = function(div) {
+		div.append('<div class="last-step"><h2 id="winnerTitle"></h2><p id="winnerContent"></p></div>');
 		div.find('.formElement:not(.formElement:first-child)').addClass('hidden');
 	};
 
@@ -129,7 +129,7 @@ window.playerMe =
 		ownScore.html(playerMe.score);
 		callback(formDiv);
 
-	}(formMain, display);
+	};
 
 	var addEventsRadio = function()
 	{
@@ -209,7 +209,8 @@ window.playerMe =
 		addEventsRadio();
 		loadPlayers();
 		setInterval(draw, 17);
-		setInterval(decreaseTimer, 20)
+		setInterval(decreaseTimer, 20);
+		builder(formMain, display);
 	}
 	window.getScore = function(score)
 	{
