@@ -44,8 +44,8 @@ window.playerMe =
 			var id = 's' + (Math.floor(Math.random() * 1000)).toString(16);
 
 			var _str = '<div class="row-form">';
-			_str += '<label for="' + id + '">' + label + '</label>';
 			_str += '<input type="radio" name="' + name + '" value="' + label + '" id="' + id + '" />';
+			_str += '<label for="' + id + '">' + label + '</label>';
 			_str += '</div>';
 			return _str;
 		},
