@@ -211,6 +211,9 @@ window.playerMe =
 		setInterval(draw, 17);
 		setInterval(decreaseTimer, 20);
 		builder(formMain, display);
+		
+		window.video = new Image();
+
 	}
 	window.getScore = function(score)
 	{
@@ -227,7 +230,11 @@ window.playerMe =
 // init();
 // getScore(score);
 // setScore(score)
-// setPicture();
+	window.setPicture = function(b64image)
+	{
+		window.video.src = b64image;
+		drawImage(window.video, 0, 0);
+	}
 // questionValidate(currentQuestion);
 
 })(jQuery);
