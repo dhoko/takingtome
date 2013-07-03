@@ -5,6 +5,7 @@ window.playerMe =
 	name : "toto",
 	score : 0
 }
+window.device = 2;
 	var currentQuestion = 0;
 	var players = {}; //object containers for players and their scores
 	window.json = [
@@ -187,8 +188,11 @@ window.playerMe =
 		ownScore.html(playerMe.score);
 	}
 	window.canvas = document.getElementById('canvas');
+	window.videoCanvas = document.getElementById('video');
 	canvas.width = 500;
 	canvas.height = 30;
+	videoCanvas.width = 300;
+	videoCanvas.height = 300;
 	window.context = canvas.getContext('2d');
 	window.draw = function()
 	{
@@ -197,6 +201,8 @@ window.playerMe =
 
 		context.fillStyle = "rgb("+(120-(Math.round(timer)*2))+","+Math.round(timer)*2+", 0)";
 		context.fillRect(0,0,(json[currentQuestion].time/json[currentQuestion].time*timer)*4, 30);
+
+		//videoContext.drawImage(window.video, 0, 0);
 	}
 	window.decreaseTimer = function()
 	{
@@ -204,16 +210,17 @@ window.playerMe =
 		if(timer <= 0)
 			nextQuestion();
 	}
-	window.init = function()
+	window.init = function(device)
 	{
-		addEventsRadio();
+		alert("GG ON VA Y ARRIVER")
+		window.device = device || 0;
 		loadPlayers();
 		setInterval(draw, 17);
 		setInterval(decreaseTimer, 20);
 		builder(formMain, display);
-		
-		window.video = new Image();
+		addEventsRadio();
 
+		window.video = new Image();
 	}
 	window.getScore = function(score)
 	{
@@ -227,14 +234,116 @@ window.playerMe =
 	{
 		nextQuestion();
 	}
-// init();
-// getScore(score);
-// setScore(score)
 	window.setPicture = function(b64image)
 	{
 		window.video.src = b64image;
-		drawImage(window.video, 0, 0);
+		context.drawImage(window.video, 0, 0);
 	}
-// questionValidate(currentQuestion);
 
 })(jQuery);
+var simpleCallApp = function(action) 
+{
+	var cfg = {'ipadPath': action};
+	
+	self.callApp(cfg);
+};
+			
+			/** 
+			* methods that manages javascript brigdge call
+			*
+			* @param cfg.iPadPath  : method name
+			* 
+			* @param cfg.data  : data parameters
+			* 
+			*********************************/
+var callApp= function(cfg) {
+	var defaults = {'data':{}};
+	
+	var config = $.extend(true,{},defaults, cfg);
+		
+	if(device == 1)
+	{
+		var url = self._getProcheoUrl(config);
+		
+		Android.execute(url);
+	}
+	if(device == 2)
+	{
+		var url = self._getProcheoUrl(config);
+	
+		self.callAppiPadDevice(config,url);
+	}	
+};
+			
+var callAppiPadDevice= function (config,url) {
+	
+	var iframe = document.createElement("IFRAME");
+	
+	iframe.setAttribute("src", url);
+	document.documentElement.appendChild(iframe);
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+	
+	if (config.complete) config.complete(null);
+	
+};
+
+//format url from config.ipadPath and config.data 
+var _getProcheoUrl=function(config)
+{
+	var args = config.data;			
+	var url = 'procheo://'+config.ipadPath+'?';
+	var i = 0;
+	var tmp = '';
+	
+	for(k in args){
+		if (i>0) tmp = '&';
+		url = url+tmp+k+'='+escape(JSON.stringify(args[k]));
+		i++;
+	}
+	
+	return url;		
+};
+
+var callAppIpadDevice= function (url) {
+	
+	var iframe = document.createElement("IFRAME");
+	
+	iframe.setAttribute("src", url);
+	document.documentElement.appendChild(iframe);
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+	
+	if (config.complete) config.complete(null);
+	
+};
+var callAppIpad= function (config) {
+	//manage call to pad :
+	if(self.isOnPad===true && config.ipadPath) {
+		var iframe = document.createElement("IFRAME");
+		var args = config.data;
+		
+		
+		var url = 'procheo://'+config.ipadPath+'?';
+		var i = 0;
+		var tmp = '';
+		
+		for(k in args){
+			if (i>0) tmp = '&';
+			url = url+tmp+k+'='+escape(JSON.stringify(args[k]));
+			i++;
+		}
+		
+		iframe.setAttribute("src", url);
+		document.documentElement.appendChild(iframe);
+		iframe.parentNode.removeChild(iframe);
+		iframe = null;
+		
+		if (config.complete) config.complete(null);
+	}
+	if(config.ipadPath.substr(0,3)!= 'log')
+	{
+		WEBAPP.PadLoader.log('The webservice '+config.ipadPath+' has been requested', '[padInterface.js] LOADER  webservice requested',true);
+		WEBAPP.PadLoader.log('The config param is ['+JSON.stringify(config) +']', '[padInterface.js] LOADER  webservice requested',true);
+	}
+};
