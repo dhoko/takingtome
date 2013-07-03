@@ -99,6 +99,26 @@ window.playerMe =
 		div.find('.formElement:not(.formElement:first-child)').addClass('hidden');
 	};
 
+	var endOfTheGame = function(win) {
+
+		if( 'undefined' === typeof win) win = false;
+
+		var title = $(document.getElementById('winnerTitle')),
+			content = $(document.getElementById('winnerContent'));
+
+		formMain.find('.last-step').removeClass('hidden');
+
+		if(win) {
+			title.html('Vous avez gagné');
+			content.html('Bravo robert marcel');
+		}else {
+			title.html('Zut, vous avez perdu');
+			content.html('Dommage Luis enrique');
+		}
+
+	}
+
+
 	// From the config to the dom, render the form
 	var builder = function(formDiv,callback) {
 
