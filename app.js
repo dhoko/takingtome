@@ -7,27 +7,30 @@ window.playerMe =
 }
 	var currentQuestion = 0;
 	var players = {}; //object containers for players and their scores
-	var json = [
+	window.json = [
 		{
-			question : 'Ma question un',
-			rep1 : 'luis',
-			rep2 : 'marcel',
-			rep3 : 'henrie',
-			rep4 : 'robert',
-			valid : 'robert',
-			score : 5 
+			question : 'Ou sommes nous ?',
+			rep1 : 'un chateau',
+			rep2 : 'un domaine',
+			rep3 : 'une grande maison',
+			rep4 : 'un palais',
+			valid : 'un chateau',
+			score : 5, 
+			time : 60
 		},
 		{
-			question : 'Ma question 2',
-			rep1 : 'luis',
-			rep2 : 'marcel',
-			rep3 : 'henrie',
-			rep4 : 'robert',
-			valid : 'luis',
-			score : 10
+			question : 'Qui a gagn&#233; la coupe des conf&#233;d&#233;rations ?',
+			rep1 : 'Italie',
+			rep2 : 'Uruguay',
+			rep3 : 'Espagne',
+			rep4 : 'Br&#233;sil',
+			valid : 'Br&#233;sil',
+			score : 10, 
+			time : 60
 		}
 	];
- 
+
+	window.timer = json[currentQuestion].time;
  	/*
 		Form generator
 		Build a form from a custom JSON
@@ -72,7 +75,7 @@ window.playerMe =
 					str += Form.title(config[dom]);
 				}
 
-				if('question' !== dom && 'valid' !== dom) {
+				if('question' !== dom && 'valid' !== dom && 'time' !== dom) {
 					str += Form.input(config[dom],name);
 				}
 
@@ -133,7 +136,9 @@ window.playerMe =
 	}
 	window.nextQuestion = function(player, score, name)
 	{
-		players[player].score += ~~score;
+		if(player !== undefined)
+			players[player].score += ~~score;
+
 		if(currentQuestion < json.length)
 		{
 			currentQuestion++;
@@ -152,8 +157,34 @@ window.playerMe =
 	}// method called when a correct solution has been found to go to the next question
 	window.changeScore = function()
 	{
+		questionScore.html(json[currentQuestion].score)
 		ownScore.html(playerMe.score);
 	}
+	window.canvas = document.getElementById('canvas');
+	canvas.width = 500;
+	canvas.height = 30;
+	window.context = canvas.getContext('2d');
+	window.draw = function()
+	{
+		context.fillStyle = "white";
+		context.fillRect(0,0,json[currentQuestion].time*4, 30);
+
+		context.fillStyle = "rgb("+(120-(Math.round(timer)*2))+","+Math.round(timer)*2+", 0)";
+		context.fillRect(0,0,(json[currentQuestion].time/json[currentQuestion].time*timer)*4, 30);
+	}
+	window.decreaseTimer = function()
+	{
+		timer-=0.05;
+		if(timer <= 0)
+			nextQuestion();
+	}
+// init();
+// getScore(score);
+// setScore(score)
+// setPicture();
+// questionValidate(currentQuestion);
 
 loadPlayers();
+setInterval(draw, 17);
+setInterval(decreaseTimer, 20)
 })(jQuery);
