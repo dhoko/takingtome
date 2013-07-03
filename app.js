@@ -212,6 +212,7 @@ window.device = 2;
 	}
 	window.init = function(device)
 	{
+		alert("GG ON VA Y ARRIVER")
 		window.device = device || 0;
 		loadPlayers();
 		setInterval(draw, 17);
