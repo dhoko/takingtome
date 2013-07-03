@@ -35,3 +35,8 @@ input[type="radio"] {
 	bottom: 0;
 	margin: auto;
 }
+
+#canvas{
+	margin-left: 65%;
+margin-top: -7%;
+}
