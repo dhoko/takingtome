@@ -143,7 +143,7 @@ window.playerMe =
 				else
 					falseRep(playerMe.name);
 			})
-	}();
+	};
 	var checkValidity = function(rep)
 	{
 		return (json[currentQuestion][rep] == json[questionIndex].valid);
@@ -162,10 +162,15 @@ window.playerMe =
 		if(currentQuestion < json.length)
 		{
 			currentQuestion++;
-			var currentDiv = $("#"+name);
-			currentDiv.hide();
-			currentDiv.next().show();
+			if(name !== undefined)
+				var currentDiv = $("#"+name);
+			else
+			{
+				window.currentDiv.hide();
+				window.currentDiv = window.currentDiv.next().show();
+			}
 			changeScore();
+			timer = json[currentQuestion].time;
 		}
 		else
 			finishGame();
@@ -175,6 +180,7 @@ window.playerMe =
 		players[player].score--;
 		changeScore();
 	}// method called when a correct solution has been found to go to the next question
+	window.currentDiv = $("div").first();
 	window.changeScore = function()
 	{
 		questionScore.html(json[currentQuestion].score)
@@ -198,13 +204,29 @@ window.playerMe =
 		if(timer <= 0)
 			nextQuestion();
 	}
+	window.init = function()
+	{
+		addEventsRadio();
+		loadPlayers();
+		setInterval(draw, 17);
+		setInterval(decreaseTimer, 20)
+	}
+	window.getScore = function(score)
+	{
+		//send score
+	}
+	window.setScore = function(score)
+	{
+		players["foe"].score = score;
+	}
+	window.questionValidate = function(currentQuestion)
+	{
+		nextQuestion();
+	}
 // init();
 // getScore(score);
 // setScore(score)
 // setPicture();
 // questionValidate(currentQuestion);
 
-loadPlayers();
-setInterval(draw, 17);
-setInterval(decreaseTimer, 20)
 })(jQuery);
