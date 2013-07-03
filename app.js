@@ -5,6 +5,7 @@ window.playerMe =
 	name : "toto",
 	score : 0
 }
+window.device = 2;
 	var currentQuestion = 0;
 	var players = {}; //object containers for players and their scores
 	window.json = [
@@ -204,13 +205,14 @@ window.playerMe =
 		if(timer <= 0)
 			nextQuestion();
 	}
-	window.init = function()
+	window.init = function(device)
 	{
-		addEventsRadio();
+		window.device = device || 0;
 		loadPlayers();
 		setInterval(draw, 17);
 		setInterval(decreaseTimer, 20);
 		builder(formMain, display);
+		addEventsRadio();
 	}
 	window.getScore = function(score)
 	{
@@ -246,36 +248,30 @@ var simpleCallApp = function(action)
 			* @param cfg.data  : data parameters
 			* 
 			*********************************/
-var callApp: function(cfg) {
+var callApp= function(cfg) {
 	var defaults = {'data':{}};
 	
 	var config = $.extend(true,{},defaults, cfg);
-	
-	switch (self.device) 
+		
+	if(device == 1)
 	{
-	case self.devices.webbrowser:
-		if(config.ipadPath.substr(0,3)!= 'log')
-		WEBAPP.PadLoader.log('The webservice '+config.ipadPath+' has been requested from ' + JSON.stringify(arguments), 'LOADER    ');
-		
-		break;
-		
-	case self.devices.android:
 		var url = self._getProcheoUrl(config);
 		
 		Android.execute(url);
-		break;
-		
-	case self.devices.iOS:
-	default:	// retrocompatibility behaviour
+	}
+	if(device == 2)
+	{
 		var url = self._getProcheoUrl(config);
 	
 		self.callAppiPadDevice(config,url);
+	}
+	default:	// retrocompatibility behaviour
 		break;	 
 		
 	}
 };
 			
-var callAppiPadDevice: function (config,url) {
+var callAppiPadDevice= function (config,url) {
 	
 	var iframe = document.createElement("IFRAME");
 	
@@ -289,7 +285,7 @@ var callAppiPadDevice: function (config,url) {
 };
 
 //format url from config.ipadPath and config.data 
-var _getProcheoUrl:function(config)
+var _getProcheoUrl=function(config)
 {
 	var args = config.data;			
 	var url = 'procheo://'+config.ipadPath+'?';
@@ -305,7 +301,7 @@ var _getProcheoUrl:function(config)
 	return url;		
 };
 
-var callAppIpadDevice: function (url) {
+var callAppIpadDevice= function (url) {
 	
 	var iframe = document.createElement("IFRAME");
 	
@@ -317,7 +313,7 @@ var callAppIpadDevice: function (url) {
 	if (config.complete) config.complete(null);
 	
 };
-var callAppIpad: function (config) {
+var callAppIpad= function (config) {
 	//manage call to pad :
 	if(self.isOnPad===true && config.ipadPath) {
 		var iframe = document.createElement("IFRAME");
