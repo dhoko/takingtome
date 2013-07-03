@@ -123,7 +123,7 @@ window.playerMe =
 				else
 					falseRep(playerMe.name);
 			})
-	}();
+	};
 	var checkValidity = function(rep)
 	{
 		return (json[currentQuestion][rep] == json[questionIndex].valid);
@@ -151,7 +151,6 @@ window.playerMe =
 			}
 			changeScore();
 			timer = json[currentQuestion].time;
-			console.log(timer);
 		}
 		else
 			finishGame();
@@ -185,13 +184,29 @@ window.playerMe =
 		if(timer <= 0)
 			nextQuestion();
 	}
+	window.init = function()
+	{
+		addEventsRadio();
+		loadPlayers();
+		setInterval(draw, 17);
+		setInterval(decreaseTimer, 20)
+	}
+	window.getScore = function(score)
+	{
+		//send score
+	}
+	window.setScore = function(score)
+	{
+		players["foe"].score = score;
+	}
+	window.questionValidate = function(currentQuestion)
+	{
+		nextQuestion();
+	}
 // init();
 // getScore(score);
 // setScore(score)
 // setPicture();
 // questionValidate(currentQuestion);
 
-loadPlayers();
-setInterval(draw, 17);
-setInterval(decreaseTimer, 20)
 })(jQuery);
