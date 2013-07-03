@@ -129,7 +129,7 @@ input[type="radio"] {
 #canvas{
 	-webkit-transform: rotate(-90deg);
 	position: absolute;
-	top: 79px;
+	top: 85px;
 	right: 0;
 	margin-right: -213px;
 }

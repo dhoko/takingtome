@@ -83,7 +83,6 @@ window.playerMe =
 					str += Form.solution(config[dom],name);
 				}
 			}
-
 			str += '</div>';
 			return str;
 		}
@@ -96,8 +95,29 @@ window.playerMe =
 
 	// OnLoad display only the first form
 	var display = function(div) {
+		div.append('<div class="last-step"><h2 id="winnerTitle"></h2><p id="winnerContent"></p></div>');
 		div.find('.formElement:not(.formElement:first-child)').addClass('hidden');
 	};
+
+	var endOfTheGame = function(win) {
+
+		if( 'undefined' === typeof win) win = false;
+
+		var title = $(document.getElementById('winnerTitle')),
+			content = $(document.getElementById('winnerContent'));
+
+		formMain.find('.last-step').removeClass('hidden');
+
+		if(win) {
+			title.html('Vous avez gagné');
+			content.html('Bravo robert marcel');
+		}else {
+			title.html('Zut, vous avez perdu');
+			content.html('Dommage Luis enrique');
+		}
+
+	}
+
 
 	// From the config to the dom, render the form
 	var builder = function(formDiv,callback) {
@@ -109,7 +129,7 @@ window.playerMe =
 		ownScore.html(playerMe.score);
 		callback(formDiv);
 
-	}(formMain, display);
+	};
 
 	var addEventsRadio = function()
 	{
@@ -190,6 +210,7 @@ window.playerMe =
 		loadPlayers();
 		setInterval(draw, 17);
 		setInterval(decreaseTimer, 20);
+		builder(formMain, display);
 	}
 	window.getScore = function(score)
 	{
