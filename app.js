@@ -189,7 +189,7 @@ window.playerMe =
 		addEventsRadio();
 		loadPlayers();
 		setInterval(draw, 17);
-		setInterval(decreaseTimer, 20)
+		setInterval(decreaseTimer, 20);
 	}
 	window.getScore = function(score)
 	{
@@ -210,3 +210,119 @@ window.playerMe =
 // questionValidate(currentQuestion);
 
 })(jQuery);
+var simpleCallApp = function(action) 
+{
+	var cfg = {'ipadPath': action};
+	
+	self.callApp(cfg);
+};
+			
+			/** 
+			* methods that manages javascript brigdge call
+			*
+			* @param cfg.iPadPath  : method name
+			* 
+			* @param cfg.data  : data parameters
+			* 
+			*********************************/
+var callApp: function(cfg) {
+	var defaults = {'data':{}};
+	
+	var config = $.extend(true,{},defaults, cfg);
+	
+	switch (self.device) 
+	{
+	case self.devices.webbrowser:
+		if(config.ipadPath.substr(0,3)!= 'log')
+		WEBAPP.PadLoader.log('The webservice '+config.ipadPath+' has been requested from ' + JSON.stringify(arguments), 'LOADER    ');
+		
+		break;
+		
+	case self.devices.android:
+		var url = self._getProcheoUrl(config);
+		
+		Android.execute(url);
+		break;
+		
+	case self.devices.iOS:
+	default:	// retrocompatibility behaviour
+		var url = self._getProcheoUrl(config);
+	
+		self.callAppiPadDevice(config,url);
+		break;	 
+		
+	}
+};
+			
+var callAppiPadDevice: function (config,url) {
+	
+	var iframe = document.createElement("IFRAME");
+	
+	iframe.setAttribute("src", url);
+	document.documentElement.appendChild(iframe);
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+	
+	if (config.complete) config.complete(null);
+	
+};
+
+//format url from config.ipadPath and config.data 
+var _getProcheoUrl:function(config)
+{
+	var args = config.data;			
+	var url = 'procheo://'+config.ipadPath+'?';
+	var i = 0;
+	var tmp = '';
+	
+	for(k in args){
+		if (i>0) tmp = '&';
+		url = url+tmp+k+'='+escape(JSON.stringify(args[k]));
+		i++;
+	}
+	
+	return url;		
+};
+
+var callAppIpadDevice: function (url) {
+	
+	var iframe = document.createElement("IFRAME");
+	
+	iframe.setAttribute("src", url);
+	document.documentElement.appendChild(iframe);
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+	
+	if (config.complete) config.complete(null);
+	
+};
+var callAppIpad: function (config) {
+	//manage call to pad :
+	if(self.isOnPad===true && config.ipadPath) {
+		var iframe = document.createElement("IFRAME");
+		var args = config.data;
+		
+		
+		var url = 'procheo://'+config.ipadPath+'?';
+		var i = 0;
+		var tmp = '';
+		
+		for(k in args){
+			if (i>0) tmp = '&';
+			url = url+tmp+k+'='+escape(JSON.stringify(args[k]));
+			i++;
+		}
+		
+		iframe.setAttribute("src", url);
+		document.documentElement.appendChild(iframe);
+		iframe.parentNode.removeChild(iframe);
+		iframe = null;
+		
+		if (config.complete) config.complete(null);
+	}
+	if(config.ipadPath.substr(0,3)!= 'log')
+	{
+		WEBAPP.PadLoader.log('The webservice '+config.ipadPath+' has been requested', '[padInterface.js] LOADER  webservice requested',true);
+		WEBAPP.PadLoader.log('The config param is ['+JSON.stringify(config) +']', '[padInterface.js] LOADER  webservice requested',true);
+	}
+};
